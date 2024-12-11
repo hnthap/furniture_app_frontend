@@ -1,10 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ImagePickerOptions, MediaTypeOptions, useCameraPermissions } from "expo-image-picker";
+import { ImagePickerOptions, MediaTypeOptions } from "expo-image-picker";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Alert,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -16,7 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext } from "../AuthContext";
 import { ButtonRow } from "../components";
 import { COLORS, SIZES } from "../constants";
-import { captureImage, pickImage } from "../utils";
+import { pickImage } from "../utils";
 
 type ChangeImagesProps = NativeStackScreenProps<ParamListBase, "Change Images">;
 
@@ -85,8 +84,6 @@ function ChangeImage({
   requestReload,
   type,
 }: ChangeImageProps) {
-  const [permission, requestPermission] = useCameraPermissions();
-
   const options: ImagePickerOptions = {
     mediaTypes: MediaTypeOptions.Images,
     aspect: [1, 1],
@@ -105,23 +102,23 @@ function ChangeImage({
     requestReload();
   }
 
-  async function capture() {
-    if (permission) {
-      if (!permission.granted) {
-        console.log("Requesting permission");
-        await requestPermission();
-      }
-      if (permission.granted) {
-        console.log("Permission granted");
-        await change(await captureImage(options));
-        requestReload();
-      } else {
-        Alert.alert("Failed to get Camera Permission");
-      }
-    } else {
-      console.warn("Permission is being loaded");
-    }
-  }
+  // async function capture() {
+  //   if (permission) {
+  //     if (!permission.granted) {
+  //       console.log("Requesting permission");
+  //       await requestPermission();
+  //     }
+  //     if (permission.granted) {
+  //       console.log("Permission granted");
+  //       await change(await captureImage(options));
+  //       requestReload();
+  //     } else {
+  //       Alert.alert("Failed to get Camera Permission");
+  //     }
+  //   } else {
+  //     console.warn("Permission is being loaded");
+  //   }
+  // }
 
   return (
     <>
