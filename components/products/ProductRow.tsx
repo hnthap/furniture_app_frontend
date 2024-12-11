@@ -13,7 +13,6 @@ import { rowStyles } from "./style";
 
 export default function ProductRow() {
   const { data, loads, error } = useFetch();
-  // console.log(data['products'].length);
   return (
     <View style={rowStyles.container}>
       {loads ? (

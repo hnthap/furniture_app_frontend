@@ -1,4 +1,5 @@
 import Cart from "./Cart";
+import ChangeImages from "./ChangeImages";
 import Checkout from "./Checkout";
 import Favorites from "./Favorites";
 import Home from "./Home";
@@ -12,8 +13,7 @@ import Search from "./Search";
 import Settings from "./Settings";
 
 export {
-  Cart,
-  Checkout,
+  Cart, ChangeImages, Checkout,
   Favorites,
   Home,
   Login,

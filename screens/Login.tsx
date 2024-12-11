@@ -10,8 +10,8 @@ import { COLORS, SIZES } from "../constants";
 type LoginProps = NativeStackScreenProps<ParamListBase, "Login">;
 
 export default function Login({ navigation }: LoginProps) {
-  const { email, setEmail, login } = useContext(AuthContext);
-
+  const { email, setEmail, login, avatarBase64 } = useContext(AuthContext);
+  
   const [password, setPassword] = useState("thap");
 
   async function onLogin() {

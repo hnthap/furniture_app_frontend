@@ -5,6 +5,10 @@ import { SERVER_ENDPOINT } from "./constants";
 
 interface AuthContextState {
   authenticated: boolean;
+  avatarBase64: string | null;
+  changeAvatarAsync: (base64: string | null) => Promise<void>;
+  changeCoverAsync: (base64: string | null) => Promise<void>;
+  coverBase64: string | null;
   userId: number;
   username: string;
   email: string;
@@ -22,6 +26,10 @@ interface AuthContextState {
 
 export const AuthContext = createContext<AuthContextState>({
   authenticated: false,
+  avatarBase64: null,
+  changeAvatarAsync: async () => {},
+  changeCoverAsync: async () => {},
+  coverBase64: null,
   userId: -Infinity,
   username: "",
   email: "",
@@ -43,6 +51,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState("thap@gmail.com");
   const [userId, setUserId] = useState(1);
   const [location, setLocation] = useState("Lang Son, Vietnam");
+  const [avatarBase64, setAvatarBase64] = useState<string | null>(null);
+  const [coverBase64, setCoverBase64] = useState<string | null>(null);
 
   async function deleteAccountAsync() {
     if (!authenticated) return;
@@ -64,6 +74,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       setUsername(user.username);
       setEmail(user.email);
       setLocation(user.location);
+      setAvatarBase64(user.avatar_base64);
+      setCoverBase64(user.cover_base64);
       console.log("USER ID", user.id);
       setAuthenticated(true);
       return true;
@@ -72,6 +84,30 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       setUserId(-Infinity);
       setAuthenticated(false);
       return false;
+    }
+  }
+
+  async function changeAvatarAsync(base64: string | null) {
+    if (!authenticated) return setAvatarBase64(null);
+    try {
+      const url = `${SERVER_ENDPOINT}/api/profile/${userId}/avatar`;
+      const { data } = await axios.put(url, { base64 });
+      return setAvatarBase64(data.base64 ?? null);
+    } catch (error) {
+      Alert.alert(`failed, reason: ${error}`);
+      return setAvatarBase64(null);
+    }
+  }
+
+  async function changeCoverAsync(base64: string | null) {
+    if (!authenticated) return setCoverBase64(null);
+    try {
+      const url = `${SERVER_ENDPOINT}/api/profile/${userId}/cover`;
+      const { data } = await axios.put(url, { base64 });
+      return setCoverBase64(data.base64 ?? null);
+    } catch (error) {
+      Alert.alert(`failed, reason: ${error}`);
+      return setCoverBase64(null);
     }
   }
 
@@ -97,20 +133,24 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        userId,
-        setUserId,
-        username,
-        setUsername,
         authenticated,
+        avatarBase64,
+        changeAvatarAsync,
+        changeCoverAsync,
+        coverBase64,
+        deleteAccountAsync,
         email,
+        location,
+        login,
+        logout,
+        reloadDataAsync,
         setAuthenticated,
         setEmail,
-        deleteAccountAsync,
-        logout,
-        location,
         setLocation,
-        login,
-        reloadDataAsync,
+        setUserId,
+        setUsername,
+        userId,
+        username,
       }}
     >
       {children}

@@ -15,6 +15,7 @@ export default function Search() {
 
   async function search() {
     if (query.length === 0) return;
+    Keyboard.dismiss();
     setLoads(true);
     const url = `${SERVER_ENDPOINT}/api/product/search/${query}`;
     try {
@@ -23,7 +24,6 @@ export default function Search() {
       setResults(results);
       setStartsSearch(true);
       setLoads(false);
-      Keyboard.dismiss();
     } catch (error) {
       Alert.alert(`failed, reason: ${error}`);
     }
@@ -42,7 +42,8 @@ export default function Search() {
       {results.length === 0 ? (
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontFamily: "semibold", fontSize: 30 }}>
-            {startsSearch ? "NO RESULTS" : "⬆️ Click to search ⬆️"}
+            {startsSearch ? "NO RESULTS" : ""}
+            {/* {startsSearch ? "NO RESULTS" : "⬆️ Click to search ⬆️"} */}
           </Text>
         </View>
       ) : loads ? (

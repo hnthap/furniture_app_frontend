@@ -11,26 +11,40 @@ import { AuthContext } from "../AuthContext";
 import { COLORS, SIZES } from "../constants";
 
 export default function Profile({ navigation }) {
-  const { username, deleteAccountAsync, logout } = useContext(AuthContext);
+  const { username, deleteAccountAsync, logout, avatarBase64, coverBase64 } =
+    useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
         <StatusBar backgroundColor={COLORS.gray} />
-        <View style={{ width: "100%" }}>
-          <Image
-            source={require("../assets/images/space.jpg")}
-            resizeMode="cover"
-            style={styles.maiImag}
-          />
-        </View>
-
+        <TouchableOpacity onPress={() => navigation.navigate("Change Images")}>
+          <View style={{ width: "100%" }}>
+            <Image
+              source={
+                coverBase64
+                  ? { uri: `data:image/jpeg;base64,${coverBase64}` }
+                  : require("../assets/cover-photo-default.jpg")
+              }
+              resizeMode="cover"
+              style={styles.maiImag}
+            />
+          </View>
+        </TouchableOpacity>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Image
-            source={require("../assets/images/profile.jpg")}
-            resizeMode="cover"
-            style={styles.profileImg}
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Change Images")}
+          >
+            <Image
+              source={
+                avatarBase64
+                  ? { uri: `data:image/jpeg;base64,${avatarBase64}` }
+                  : require("../assets/avatar-default.png")
+              }
+              resizeMode="cover"
+              style={styles.profileImg}
+            />
+          </TouchableOpacity>
 
           <Text style={styles.name}>{username}</Text>
 
@@ -143,15 +157,16 @@ const styles = StyleSheet.create({
   },
   maiImag: {
     height: 290,
-    width: "100%",
+    width: SIZES.width,
   },
   profileImg: {
     height: 155,
     width: 155,
     borderRadius: 999,
-    borderColor: COLORS.primary,
+    borderColor: COLORS.secondary,
     borderWidth: 2,
     marginTop: -90,
+    backgroundColor: COLORS.secondary,
   },
   name: {
     fontFamily: "bold",

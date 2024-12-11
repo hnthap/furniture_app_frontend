@@ -1,3 +1,4 @@
+import ButtonRow, { ButtonRowProps } from "./ButtonRow";
 import CartTile from "./cart/CartTile";
 import Carousel from "./home/Carousel";
 import Headings from "./home/Headings";
@@ -12,13 +13,10 @@ import ProductListContent from "./products/ProductListContent";
 import ProductRow from "./products/ProductRow";
 
 export {
-  Carousel,
+  ButtonRow, ButtonRowProps, Carousel,
   CartTile,
   CheckoutModal,
-  Headings,
-  OrderModal,
-  OrderedItemTile,
-  OrdersList,
+  Headings, OrderedItemTile, OrderModal, OrdersList,
   ProductCard,
   ProductListContent,
   ProductRow,

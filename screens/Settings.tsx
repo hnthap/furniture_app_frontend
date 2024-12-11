@@ -26,50 +26,44 @@ export default function Settings({ navigation }: SettingsProps) {
   const [newEmail, setNewEmail] = useState(email);
   const [newLocation, setNewLocation] = useState(location);
 
-  function isSaved() {
-    return (
-      username === newUsername && email === newEmail && location === newLocation
-    );
-  }
-
-  function checkSaved() {
-    setSaved(isSaved());
-  }
-
   function onLeaveUsername() {
     if (newUsername.trim().length === 0) {
       setNewUsername(username);
     }
-    checkSaved();
+    setSaved((saved) => saved && username === newUsername);
   }
 
   function onLeaveEmail() {
     if (newEmail.trim().length === 0) {
       setNewEmail(email);
     }
-    checkSaved();
+    setSaved((saved) => saved && email === newEmail);
   }
 
   function onLeaveLocation() {
     if (newLocation.trim().length === 0) {
       setNewLocation(location);
     }
-    checkSaved();
+    setSaved((saved) => saved && location === newLocation);
   }
 
   async function saveAsync() {
-    if (!saved) {
+    if (
+      !saved &&
+      username === newUsername &&
+      email === newEmail &&
+      location === newLocation
+    ) {
       const url = `${SERVER_ENDPOINT}/api/profile/${userId}`;
-      const data = {
-        username: newUsername,
-        email: newEmail,
-        location: newLocation,
-      };
       try {
-        await axios.put(url, data);
+        await axios.put(url, {
+          username: newUsername,
+          email: newEmail,
+          location: newLocation,
+        });
         Alert.alert(`Saved Successfully`);
         await reloadDataAsync();
-        setSaved(false);
+        setSaved(true);
       } catch (error) {
         Alert.alert(`failed, reason: ${error}`);
       }

@@ -17,7 +17,6 @@ export default function useFetch(
       const url = query
         ? `${SERVER_ENDPOINT}/api/product/search/${query}`
         : `${SERVER_ENDPOINT}/api/product`;
-      // console.log("URL", url);
       const response = await axios.get(url);
       setData(response.data);
       setError(null);

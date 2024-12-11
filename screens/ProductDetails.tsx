@@ -87,7 +87,6 @@ export default function ProductDetails({ navigation }: ProductDetailsProps) {
 
   async function favoriteAsync() {
     const url = `${SERVER_ENDPOINT}/api/favorite/${userId}/${item!.id}`;
-    console.log("POST", url);
     try {
       await axios.post(url);
     } catch (error) {
@@ -97,7 +96,6 @@ export default function ProductDetails({ navigation }: ProductDetailsProps) {
 
   async function unfavoriteAsync() {
     const url = `${SERVER_ENDPOINT}/api/favorite/${userId}/${item!.id}`;
-    console.log("DELETE", url)
     try {
       await axios.delete(url);
     } catch (error) {

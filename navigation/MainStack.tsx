@@ -2,12 +2,13 @@ import { ParamListBase } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   Cart,
+  ChangeImages,
   Checkout,
   Favorites,
   Orders,
   ProductDetails,
   ProductList,
-  Settings
+  Settings,
 } from "../screens";
 import BottomTab from "./BottomTab";
 
@@ -56,6 +57,11 @@ export default function MainStack() {
       <Stack.Screen
         name="Settings"
         component={Settings}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Change Images"
+        component={ChangeImages}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
