@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZES } from "../../constants";
@@ -9,8 +8,6 @@ type OrderTileProps = {
 };
 
 export default function OrderedItemTile({ item }: OrderTileProps) {
-  const navigation = useNavigation<any>();
-
   return (
     <View style={styles.container}>
       <View style={styles.left}>

@@ -70,7 +70,11 @@ export default function Cart({ navigation }: CartProps) {
   }
 
   function checkoutAll() {
-    navigation.navigate("Checkout", { items });
+    if (items.length > 0) {
+      navigation.navigate("Checkout", { items });
+    } else {
+      Alert.alert("Your Cart is Empty", "Add something to the cart to buy it!");
+    }
   }
 
   return (
@@ -87,8 +91,8 @@ export default function Cart({ navigation }: CartProps) {
         <Text style={styles.title}>Cart</Text>
         <TouchableOpacity onPress={checkoutAll} style={styles.button}>
           <Text style={styles.buttonTitle}>
-            {total === null
-              ? "CHECKOUT ALL"
+            {total === null || total === 0
+              ? "ADD SOMETHING FIRST"
               : `CHECKOUT $${(total / 100).toFixed(2)}`}
           </Text>
         </TouchableOpacity>

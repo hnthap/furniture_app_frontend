@@ -46,7 +46,10 @@ export default function Orders({ navigation }: OrdersProps) {
         </TouchableOpacity>
         <Text style={styles.title}> Orders </Text>
       </View>
-      <OrdersList items={orders} onPressEach={selectOrder} />
+      <OrdersList
+        items={orders}
+        onPressEachOrder={selectOrder}
+      />
       <OrderModal
         visible={selectedOrder !== null}
         onRequestClose={() => selectOrder(null)}

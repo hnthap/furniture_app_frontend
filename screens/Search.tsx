@@ -15,6 +15,7 @@ export default function Search() {
 
   async function search() {
     if (query.length === 0) return;
+    setQuery((query) => query.trim());
     Keyboard.dismiss();
     setLoads(true);
     const url = `${SERVER_ENDPOINT}/api/product/search/${query}`;

@@ -54,7 +54,9 @@ export default function OrderModal({
       <FlatList
         data={items}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <OrderedItemTile item={item} />}
+        renderItem={({ item }) => (
+          <OrderedItemTile item={item} />
+        )}
         contentContainerStyle={styles.container}
         ItemSeparatorComponent={() => <></>}
       />

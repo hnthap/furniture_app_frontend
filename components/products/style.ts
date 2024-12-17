@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, SHADOWS, SIZES } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
 
 export const cardStyles = StyleSheet.create({
   container: {
@@ -61,8 +61,10 @@ export const rowStyles = StyleSheet.create({
 export const listContentStyles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
-    paddingTop: SIZES.xxLarge * 2,
+    paddingTop: SIZES.xxLarge,
+    paddingBottom: SIZES.height / 2,
     marginHorizontal: SIZES.large,
+    marginBottom: SIZES.height / 2,
   },
   separator: {
     height: 16,

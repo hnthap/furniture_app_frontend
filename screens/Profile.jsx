@@ -6,7 +6,14 @@ import {
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { AuthContext } from "../AuthContext";
 import { COLORS, SIZES } from "../constants";
 
@@ -113,9 +120,26 @@ export default function Profile({ navigation }) {
 
             {/* Delete Account */}
             <TouchableOpacity
-              onPress={async () => {
-                await deleteAccountAsync();
-                navigation.navigate("Auth Stack Navigation");
+              onPress={() => {
+                Alert.alert(
+                  "Delete My Account",
+                  "Are you REALLY sure? Account Deletion is IRREVERSIBLE!",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => {}, // Do nothing
+                      style: "cancel",
+                    },
+                    {
+                      text: "Delete my account",
+                      onPress: async () => {
+                        await deleteAccountAsync();
+                        navigation.navigate("Auth Stack Navigation");
+                      },
+                      style: "destructive",
+                    },
+                  ]
+                );
               }}
             >
               <View style={styles.menuItem(0.5)}>
