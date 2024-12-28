@@ -31,6 +31,7 @@ export default function Settings({ navigation }: SettingsProps) {
       setNewUsername(username);
     }
     setSaved((saved) => saved && username === newUsername);
+    console.log('username:', username, '\tsaved:', saved);
   }
 
   function onLeaveEmail() {
@@ -38,6 +39,7 @@ export default function Settings({ navigation }: SettingsProps) {
       setNewEmail(email);
     }
     setSaved((saved) => saved && email === newEmail);
+    console.log("email:", email, "\tsaved:", saved);
   }
 
   function onLeaveLocation() {
@@ -45,6 +47,7 @@ export default function Settings({ navigation }: SettingsProps) {
       setNewLocation(location);
     }
     setSaved((saved) => saved && location === newLocation);
+    console.log("location:", location, "\tsaved:", saved);
   }
 
   async function saveAsync() {

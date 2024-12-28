@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext } from "../AuthContext";
 import { Carousel, Headings, ProductRow, Welcome } from "../components";
-import { COLORS, SERVER_ENDPOINT } from "../constants";
+import { COLORS, SERVER_ENDPOINT, SIZES } from "../constants";
 import { homeStyles } from "./style";
 
 type HomeProps = NativeStackScreenProps<ParamListBase, "Home">;
@@ -110,7 +110,23 @@ export default function Home({ navigation }: HomeProps) {
       </View>
       <ScrollView>
         <Welcome openSearch={openSearch} />
-        <Carousel />
+        <Carousel
+          imageSources={[
+            require("../assets/images/fn1.jpg"),
+            require("../assets/images/fn2.jpg"),
+            require("../assets/images/fn3.jpg"),
+            require("../assets/images/fn4.jpg"),
+            require("../assets/images/fn5.jpg"),
+          ]}
+          imageStyle={{
+            borderRadius: 15,
+            width: SIZES.width,
+            height: 200,
+            marginTop: 10,
+          }}
+          scrollDuration={5000}
+          style={{ flex: 1 }}
+        />
         <Headings goToProductList={() => navigation.navigate("Product List")} />
         <ProductRow />
       </ScrollView>

@@ -9,11 +9,13 @@ export default function SearchInput({
   setQuery,
   search,
   icon,
+  onPressInput,
 }: {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
   search: () => void;
   icon?: ReactNode;
+  onPressInput?: () => void;
 }) {
   return (
     <View style={searchInputStyles.container}>
@@ -26,6 +28,7 @@ export default function SearchInput({
           value={query}
           onChangeText={setQuery}
           placeholder="What are you looking for?"
+          onPressIn={onPressInput}
         />
       </View>
       <View>

@@ -3,7 +3,14 @@ import { ParamListBase } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext } from "../AuthContext";
 import { CartTile } from "../components";
@@ -61,6 +68,18 @@ export default function Cart({ navigation }: CartProps) {
     }
   }
 
+  async function deleteAllAsync() {
+    const url = `${SERVER_ENDPOINT}/api/cart/${userId}`;
+    try {
+      await axios.delete(url);
+      setItems([]);
+    } catch (error) {
+      Alert.alert(`failed, reason: ${error}`);
+    } finally {
+      await reloadCartAsync();
+    }
+  }
+
   function open(item: Product) {
     navigation.navigate("Product Details", { item, needsReload: true });
   }
@@ -97,6 +116,37 @@ export default function Cart({ navigation }: CartProps) {
           </Text>
         </TouchableOpacity>
       </View>
+      {total === null || total === 0 ? (
+        <></>
+      ) : (
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(
+              "Irreversable Action",
+              "Are you sure you want to remove ALL items? This action is irreversable.",
+              [
+                {
+                  text: "NO",
+                  style: "default",
+                  isPreferred: true,
+                  onPress: () => {
+                    // Do nothing
+                  },
+                },
+                {
+                  text: "YES, I AM",
+                  style: "destructive",
+                  isPreferred: false,
+                  onPress: deleteAllAsync,
+                },
+              ]
+            );
+          }}
+          style={styles.deleteButton}
+        >
+          <Text style={styles.deleteButtonText}>Clear Cart</Text>
+        </TouchableOpacity>
+      )}
       <ScrollView style={styles.scrollView}>
         {items.length === 0 ? (
           <View style={{ alignItems: "center" }}>
@@ -170,7 +220,20 @@ const styles = StyleSheet.create({
     fontFamily: "bold",
     marginHorizontal: SIZES.xSmall,
   },
+  deleteButton: {
+    backgroundColor: COLORS.red,
+    marginHorizontal: SIZES.large,
+    marginVertical: SIZES.small,
+    padding: SIZES.small,
+    borderRadius: SIZES.medium,
+    alignItems: "center",
+  },
+  deleteButtonText: {
+    color: COLORS.lightWhite,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   scrollView: {
     marginBottom: SIZES.large,
-  }
+  },
 });

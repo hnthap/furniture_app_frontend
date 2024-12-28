@@ -1,19 +1,6 @@
 import { StyleSheet } from "react-native";
 import { COLORS, SIZES } from "../../constants";
 
-export const carouselStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  image: {
-    borderRadius: 15,
-    width: "95%",
-    height: 200, // TODO: remove this
-    marginTop: 10,
-  },
-});
-
 export const headingsStyle = StyleSheet.create({
   container: {
     marginTop: SIZES.medium,

@@ -1,6 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
-import { COLORS, SIZES } from "../../constants";
 import SearchInput from "./SearchInput";
 import { welcomeStyles } from "./style";
 
@@ -21,13 +19,7 @@ export default function Welcome({ openSearch }: WelcomeProps) {
         query={""}
         setQuery={() => {}}
         search={openSearch}
-        icon={
-          <Ionicons
-            name="camera-outline"
-            size={SIZES.xLarge}
-            color={COLORS.offwhite}
-          />
-        }
+        onPressInput={openSearch}
       />
     </>
   );

@@ -1,17 +1,74 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import { carouselStyles } from "./style";
+import { useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  Image,
+  ImageSourcePropType,
+  ImageStyle,
+  View,
+  ViewStyle,
+} from "react-native";
 
-// TODO: do according to https://docs.expo.dev/versions/latest/sdk/view-pager/
+export default function Carousel<T>({
+  imageSources,
+  imageStyle,
+  scrollDuration,
+  slideStyle,
+  style,
+}: {
+  imageSources: ImageSourcePropType[];
+  imageStyle?: ImageStyle;
+  scrollDuration: number;
+  slideStyle?: ViewStyle;
+  style: ViewStyle;
+}) {
+  const ref = useRef<FlatList>(null);
+  const [index, setIndex] = useState(0);
 
-export default function Carousel() {
-  const slides = [
-    require("../../assets/images/fn1.jpg"),
-    require("../../assets/images/fn2.jpg"),
-    require("../../assets/images/fn4.jpg"),
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((index) => {
+        const temp = index + 1;
+        const nextIndex = temp === imageSources.length ? 0 : temp;
+        scrollTo(nextIndex);
+        return nextIndex;
+      });
+    }, scrollDuration);
+    return () => clearInterval(interval);
+  }, []);
+
+  function scrollTo(index: number) {
+    if (ref.current) {
+      ref.current.scrollToIndex({ animated: true, index });
+    }
+  }
+
   return (
-    <View style={carouselStyles.container}>
-      <Image style={carouselStyles.image} source={slides[0]} />
+    <FlatList
+      ref={ref}
+      data={imageSources}
+      style={style}
+      renderItem={({ item }) => (
+        <Slide imageStyle={imageStyle} source={item} style={slideStyle} />
+      )}
+      pagingEnabled
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    />
+  );
+}
+
+function Slide({
+  imageStyle,
+  source,
+  style,
+}: {
+  imageStyle?: ImageStyle;
+  source: ImageSourcePropType;
+  style?: ViewStyle;
+}) {
+  return (
+    <View style={style}>
+      <Image source={source} style={imageStyle} />
     </View>
   );
 }
