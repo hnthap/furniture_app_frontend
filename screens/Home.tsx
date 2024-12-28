@@ -112,6 +112,7 @@ export default function Home({ navigation }: HomeProps) {
         <Welcome openSearch={openSearch} />
         <Carousel
           imageSources={[
+            require("../assets/sales.jpg"),
             require("../assets/images/fn1.jpg"),
             require("../assets/images/fn2.jpg"),
             require("../assets/images/fn3.jpg"),

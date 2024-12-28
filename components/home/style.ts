@@ -22,11 +22,11 @@ export const welcomeStyles = StyleSheet.create({
   },
   text: {
     fontFamily: "bold",
-    fontSize: SIZES.xxLarge - 10,
+    fontSize: SIZES.xxLarge - 20,
     marginHorizontal: SIZES.small,
   },
   text1: { color: COLORS.black, marginTop: SIZES.xSmall },
-  text2: { color: COLORS.primary, marginTop: 0 },
+  text2: { color: COLORS.gray, marginTop: 0 },
 });
 
 export const searchInputStyles = StyleSheet.create({
